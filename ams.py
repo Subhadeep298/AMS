@@ -1,4 +1,4 @@
-#AMS
+#AMS--1
 
 from tkinter import *
 import tkinter.ttk as ttk
