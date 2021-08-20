@@ -122,12 +122,13 @@ def DisplayForm():
 
 # Search Bar
  Entry(SearchPanel,font=("Arial",10,"bold"),textvariable=search, width= 50).grid(row=0,column=1,padx= 10, pady= 10)
-#Search Button
- image1 = Image.open('img/img3.jpg')
- image1 = image1.resize((5, 5), Image.ANTIALIAS)
- search_btn = ImageTk.PhotoImage(image1)
+
+#Search Button with an image as an icon
+
+ search_btn = ImageTk.PhotoImage(Image.open("img/search_icon.jpg").resize((200, 200), Image.ANTIALIAS))
  search_btn_label = Label(image=search_btn)
- Button(SearchPanel,image= search_btn, width=20, height=20).grid(row=0,column=2,padx=10,pady=10)
+ my_button = Button(SearchPanel,image= search_btn, width=20, height=20)
+ my_button.grid(row=0,column=2,padx=10,pady=10)
 
 #ViewAll Button
  Button(SearchPanel,text="View All",font=("Arial", 10, "bold"),width=10).grid(row=0,column=3,padx=10,pady=10)
