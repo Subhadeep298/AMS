@@ -4,7 +4,8 @@ from tkinter import *
 import tkinter.ttk as ttk
 import tkinter.messagebox as tkMessageBox
 import sqlite3
-from typing import Sized 
+from typing import Sized
+from PIL import ImageTk, Image
 
 # def Database():
 #  global conn,cursor
@@ -25,6 +26,7 @@ from typing import Sized
 #   AVAILIABILITY TEXT)
 #  """)
 
+
 def DisplayForm():
  #creating window
  global display_screen
@@ -39,7 +41,7 @@ def DisplayForm():
  display_screen.title("AMS")
 
  #declaring variables
- global district,town,location,size,sqfeet,rate,period,availability
+ global district,town,location,size,sqfeet,rate,period,availability,search
  district = StringVar()
  town = StringVar()
  location = StringVar()
@@ -48,6 +50,7 @@ def DisplayForm():
  rate = IntVar()
  period = StringVar()
  availability = StringVar()
+ search= StringVar()
  #creating frames for layout
 
  #frame for the heading
@@ -74,38 +77,60 @@ def DisplayForm():
  ID.grid(row=0,column=0,columnspan=2,sticky=" ")
 
  Label(LForm, text="District", font=("Arial", 12)).grid(row=1,column=0,pady=5)
- Entry(LForm,font=("Arial",10,"bold"),textvariable=district).grid(row=2,column=0,padx= 30)
+ Entry(LForm,font=("Arial",10,"bold"),textvariable=district).grid(row=2,column=0,padx= 30, ipady=3)
 
  Label(LForm, text="Town ", font=("Arial", 12)).grid(row=1,column=1,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=town).grid(row=2,column=1,padx= 30,pady=20)
+ Entry(LForm, font=("Arial", 10, "bold"),textvariable=town).grid(row=2,column=1,padx= 30,pady=20, ipady=3)
 
  Label(LForm, text="Location ", font=("Arial", 12)).grid(row=3,column=0,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=location).grid(row=4,column=0,padx= 30,pady=20)
+ Entry(LForm, font=("Arial", 10, "bold"),textvariable=location).grid(row=4,column=0,padx= 30,pady=20, ipady=3)
 
  Label(LForm, text="Size", font=("Arial", 12)).grid(row=3,column=1,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=size).grid(row=4,column=1,padx= 30,pady=20)
+ Entry(LForm, font=("Arial", 10, "bold"),textvariable=size).grid(row=4,column=1,padx= 30,pady=20, ipady=3)
 
  Label(LForm, text="Sq.Feet ", font=("Arial", 12)).grid(row=5,column=0,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=sqfeet).grid(row=6,column=0,padx= 30,pady=20)
+ Entry(LForm, font=("Arial", 10, "bold"),textvariable=sqfeet).grid(row=6,column=0,padx= 30,pady=20, ipady=3)
  
  Label(LForm, text="Rate ", font=("Arial", 12)).grid(row=5,column=1,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=rate).grid(row=6,column=1,padx= 30,pady=20)
+ Entry(LForm, font=("Arial", 10, "bold"),textvariable=rate).grid(row=6,column=1,padx= 30,pady=20, ipady=3)
 
  Label(LForm, text="Period", font=("Arial", 12)).grid(row=7,column=0,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=period).grid(row=8,column=0,padx= 30,pady=20)
+ Entry(LForm, font=("Arial", 10, "bold"),textvariable=period).grid(row=8,column=0,padx= 30,pady=20, ipady=3)
 
  Label(LForm, text="Availability", font=("Arial", 12)).grid(row=7,column=1,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=availability).grid(row=8,column=1,pady=5)
+ Entry(LForm, font=("Arial", 10, "bold"),textvariable=availability).grid(row=8,column=1,pady=5, ipady=3)
 
- Button(LForm,text="Submit",font=("Arial", 10, "bold"),width=30).grid(row=9,column=0,columnspan=2,padx=20,pady=20)
+#Submit Button
+ Button(LForm,text="Submit", font=("Arial", 10, "bold"),width=30).grid(row=9,column=0,columnspan=2,padx=20,pady=20)
 
 # Name DropDown
- Button(SearchPanel,text="Name",font=("Arial", 10, "bold"),width=10).grid(row=0,column=0,padx=10,pady=10)
+ # Change the label text
+ options = [
+  "District",
+  "Town",
+  "Location",
+  "Size",
+  "Sq. Feet",
+  "Rate",
+  "Period"
+ ]
+ clicked = StringVar()
+ clicked.set("District")  # initial menu text
+ OptionMenu(SearchPanel, clicked, *options).grid(row=0,column=0,padx=10,pady=10) # Dropdown menu
 
 # Search Bar
- Entry(SearchPanel,font=("Arial",10,"bold"),textvariable=district).grid(row=0,column=1,padx= 10, pady= 10)
+ Entry(SearchPanel,font=("Arial",10,"bold"),textvariable=search, width= 50).grid(row=0,column=1,padx= 10, pady= 10)
 #Search Button
- Button(SearchPanel,text="Search",font=("Arial", 10, "bold"),width=10).grid(row=0,column=2,padx=10,pady=10)
+ image1 = Image.open('img/img3.jpg')
+ image1 = image1.resize((5, 5), Image.ANTIALIAS)
+ search_btn = ImageTk.PhotoImage(image1)
+ search_btn_label = Label(image=search_btn)
+ Button(SearchPanel,image= search_btn, width=20, height=20).grid(row=0,column=2,padx=10,pady=10)
+
+#ViewAll Button
+ Button(SearchPanel,text="View All",font=("Arial", 10, "bold"),width=10).grid(row=0,column=3,padx=10,pady=10)
+#Delete Button
+ Button(SearchPanel,text="Delete",font=("Arial", 10, "bold"),width=10).grid(row=0,column=4,padx=10,pady=10)
 
 
 DisplayForm()
