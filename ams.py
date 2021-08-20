@@ -92,7 +92,9 @@ def DisplayForm():
  Entry(LForm, font=("Arial", 10, "bold"),textvariable=sqfeet).grid(row=6,column=0,padx= 30,pady=20, ipady=3)
  
  Label(LForm, text="Rate ", font=("Arial", 12)).grid(row=5,column=1,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=rate).grid(row=6,column=1,padx= 30,pady=20, ipady=3)
+ rate = Entry(LForm, font=("Arial", 10, "bold"),textvariable=rate)
+ rate.grid(row=6,column=1,padx= 30,pady=20, ipady=3)
+ rate.delete(0, 'end') # to remove the initial value zero
 
  Label(LForm, text="Period", font=("Arial", 12)).grid(row=7,column=0,pady=5)
  Entry(LForm, font=("Arial", 10, "bold"),textvariable=period).grid(row=8,column=0,padx= 30,pady=20, ipady=3)
