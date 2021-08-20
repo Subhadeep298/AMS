@@ -58,8 +58,11 @@ def DisplayForm():
  LForm = Frame(display_screen,width=280)
  LForm.pack(side=LEFT,fill=Y)
  #mid frame for displaying students record
- MidViewForm = Frame(display_screen, width="1000",bg="gray")
+ MidViewForm = Frame(display_screen, width="1000",bg="grey")
  MidViewForm.pack(side=RIGHT,fill=Y)
+ #Search Panel for the students
+ SearchPanel = Frame(MidViewForm, width="1000", height= "50", bg="black")
+ SearchPanel.pack(side=TOP)
 
  #label for heading
  lbl_text = Label(HeadingForm, text="Advertisement Management System", font=('verdana', 22),width=600,bg="#e6c68c",fg="#5b29ab")
