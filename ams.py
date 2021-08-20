@@ -61,8 +61,9 @@ def DisplayForm():
  MidViewForm = Frame(display_screen, width="1000",bg="grey")
  MidViewForm.pack(side=RIGHT,fill=Y)
  #Search Panel for the students
- SearchPanel = Frame(MidViewForm, width="1000", height= "50", bg="black")
- SearchPanel.pack(side=TOP)
+ SearchPanel = Frame(MidViewForm, width="1000", height= "50", bg="white")
+ SearchPanel.grid(column=1)
+ SearchPanel.grid_propagate(0)
 
  #label for heading
  lbl_text = Label(HeadingForm, text="Advertisement Management System", font=('verdana', 22),width=600,bg="#e6c68c",fg="#5b29ab")
@@ -97,6 +98,15 @@ def DisplayForm():
  Entry(LForm, font=("Arial", 10, "bold"),textvariable=availability).grid(row=8,column=1,pady=5)
 
  Button(LForm,text="Submit",font=("Arial", 10, "bold"),width=30).grid(row=9,column=0,columnspan=2,padx=20,pady=20)
+
+# Name DropDown
+ Button(SearchPanel,text="Name",font=("Arial", 10, "bold"),width=10).grid(row=0,column=0,padx=10,pady=10)
+
+# Search Bar
+ Entry(SearchPanel,font=("Arial",10,"bold"),textvariable=district).grid(row=0,column=1,padx= 10, pady= 10)
+#Search Button
+ Button(SearchPanel,text="Search",font=("Arial", 10, "bold"),width=10).grid(row=0,column=2,padx=10,pady=10)
+
 
 DisplayForm()
 display_screen.mainloop()
