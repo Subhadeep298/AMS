@@ -149,9 +149,9 @@ def DisplayForm():
 
  # search_btn = ImageTk.PhotoImage(Image.open("img/search_icon.png").resize((20, 20), Image.ANTIALIAS))
  # search_btn_label = Label(image=search_btn)
- # my_button = Button(SearchPanel,image= search_btn, width=20, height=20)
+ # my_button = Button(SearchPanel,image= search_btn)
  # my_button.grid(row=0,column=2,padx=10,pady=10)
- 
+
  Button(SearchPanel,text="Search",font=("Arial", 10, "bold"),width=10).grid(row=0,column=2,padx=10,pady=10)
 
  
