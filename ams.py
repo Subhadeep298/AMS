@@ -107,21 +107,43 @@ def DisplayForm():
 
 # Name DropDown
  # Change the label text
- options = [
-  "District",
-  "Town",
-  "Location",
-  "Size",
-  "Sq. Feet",
-  "Rate",
-  "Period"
- ]
+ # options = [
+ #  "District",
+ #  "Town",
+ #  "Location",
+ #  "Size",
+ #  "Sq. Feet",
+ #  "Rate",
+ #  "Period"
+ # ]
+ # clicked = StringVar()
+ # clicked.set("District")  # initial menu text
+ # OptionMenu(SearchPanel, clicked, *options).grid(row=0,column=0,padx=10,pady=10) # Dropdown menu
+
+ global clicked 
  clicked = StringVar()
- clicked.set("District")  # initial menu text
- OptionMenu(SearchPanel, clicked, *options).grid(row=0,column=0,padx=10,pady=10) # Dropdown menu
+ choosen = ttk.Combobox(SearchPanel, width = 20,textvariable = clicked)
+  
+# Adding combobox drop down list
+ choosen["values"] = [
+     "District",
+     "Town",
+     "Location",
+     "Size",
+     "Sq. Feet",
+     "Rate",
+     "Period"
+ ]
+  
+ choosen.grid(row=0, column=0,padx=10,pady=10)
+ # Shows february as a default value
+ choosen.current(0) 
+
 
 # Search Bar
- Entry(SearchPanel,font=("Arial",10,"bold"),textvariable=search, width= 50).grid(row=0,column=1,padx= 10, pady= 10)
+ search_bar = Entry(SearchPanel,font=("Arial",10,"bold"),textvariable=search, width= 50)
+ search_bar.grid(row=0,column=1,padx= 10, pady= 10)
+ search_bar.insert(0,"Search here......")
 
 #Search Button with an image as an icon
 
@@ -137,7 +159,8 @@ def DisplayForm():
 
 
 DisplayForm()
-display_screen.mainloop()
+if __name__ == '__main__':
+ display_screen.mainloop()
 # Hi I am Soumyajit
 # I am collaborating with Subhadeep
  
