@@ -152,7 +152,7 @@ def DisplayForm():
  # my_button = Button(SearchPanel,image= search_btn)
  # my_button.grid(row=0,column=2,padx=10,pady=10)
 
- Button(SearchPanel,text="Search",font=("Arial", 10, "bold"),width=10).grid(row=0,column=2,padx=10,pady=10)
+ Button(SearchPanel,text="Search",font=("Arial", 10, "bold"),width=10,bg="black",fg="white").grid(row=0,column=2,padx=10,pady=10)
 
  
 
