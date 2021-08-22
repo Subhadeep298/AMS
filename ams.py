@@ -63,6 +63,7 @@ def DisplayForm():
  #mid frame for displaying students record
  MidViewForm = Frame(display_screen, width="1000",bg="grey")
  MidViewForm.pack(side=RIGHT,fill=Y)
+
  #Search Panel for the students
  SearchPanel = Frame(MidViewForm, width="1000", height= "50", bg="white")
  SearchPanel.grid(column=1)
@@ -103,7 +104,7 @@ def DisplayForm():
  Entry(LForm, font=("Arial", 10, "bold"),textvariable=availability).grid(row=8,column=1,pady=5, ipady=3)
 
 #Submit Button
- Button(LForm,text="Submit", font=("Arial", 10, "bold"),width=30).grid(row=9,column=0,columnspan=2,padx=20,pady=20)
+ Button(LForm,text="Submit", font=("Arial", 10, "bold"),width=30,bg="lightblue",fg="black",command=register).grid(row=9,column=0,columnspan=2,padx=20,pady=20)
 
 # Name DropDown
  # Change the label text
@@ -132,13 +133,11 @@ def DisplayForm():
      "Size",
      "Sq. Feet",
      "Rate",
-     "Period"
- ]
+     "Period"]
   
  choosen.grid(row=0, column=0,padx=10,pady=10)
  # Shows february as a default value
  choosen.current(0) 
-
 
 # Search Bar
  search_bar = Entry(SearchPanel,font=("Arial",10,"bold"),textvariable=search, width= 50)
@@ -152,14 +151,28 @@ def DisplayForm():
  # my_button = Button(SearchPanel,image= search_btn)
  # my_button.grid(row=0,column=2,padx=10,pady=10)
 
- Button(SearchPanel,text="Search",font=("Arial", 10, "bold"),width=10,bg="black",fg="white").grid(row=0,column=2,padx=10,pady=10)
+ Button(SearchPanel,text="Search",font=("Arial", 10, "bold"),width=10,bg="black",fg="white",command=SearchRecord).grid(row=0,column=2,padx=10,pady=10)
 
  
 
 #ViewAll Button
- Button(SearchPanel,text="View All",font=("Arial", 10, "bold"),width=10).grid(row=0,column=3,padx=10,pady=10)
+ Button(SearchPanel,text="View All",font=("Arial", 10, "bold"),width=10,command=DisplayData).grid(row=0,column=3,padx=10,pady=10)
+
 #Delete Button
- Button(SearchPanel,text="Delete",font=("Arial", 10, "bold"),width=10).grid(row=0,column=4,padx=10,pady=10)
+ Button(SearchPanel,text="Delete",font=("Arial", 10, "bold"),width=10,command=Delete).grid(row=0,column=4,padx=10,pady=10)
+
+def register():
+    return
+
+def SearchRecord():
+    return
+
+def DisplayData():
+    return
+
+def Delete():
+    return
+
 
 
 DisplayForm()
