@@ -66,8 +66,7 @@ def DisplayForm():
 
  #Search Panel for the students
  SearchPanel = Frame(MidViewForm, width="1000", height= "50", bg="white")
- SearchPanel.grid(column=1)
- SearchPanel.grid_propagate(0)
+ SearchPanel.pack(side=TOP,fill=Y)
 
  #label for heading
  lbl_text = Label(HeadingForm, text="Advertisement Management System", font=('verdana', 22),width=600,bg="#e6c68c",fg="#5b29ab")
@@ -160,6 +159,37 @@ def DisplayForm():
 
 #Delete Button
  Button(SearchPanel,text="Delete",font=("Arial", 10, "bold"),width=10,command=Delete).grid(row=0,column=4,padx=10,pady=10)
+
+
+ scrollbarx = Scrollbar(MidViewForm, orient=HORIZONTAL)
+ scrollbary = Scrollbar(MidViewForm, orient=VERTICAL)
+ tree = ttk.Treeview(MidViewForm,columns=("District",'Town','Location','Size','Sqfeet','Rate','Period','Availability'),
+                        selectmode="extended", height=100, yscrollcommand=scrollbary.set, xscrollcommand=scrollbarx.set)
+ scrollbary.config(command=tree.yview)
+ scrollbary.pack(side=RIGHT, fill=Y)
+ scrollbarx.config(command=tree.xview)
+ scrollbarx.pack(side=BOTTOM, fill=X)
+
+ tree.heading('District', text="District", anchor=W)
+ tree.heading('Town', text="Town", anchor=W)   
+ tree.heading('Location', text="Location", anchor=W)
+ tree.heading('Size', text="Size", anchor=W)
+ tree.heading('Sqfeet', text="Sqfeet", anchor=W)
+ tree.heading('Rate', text="Rate", anchor=W)
+ tree.heading('Period', text="Period", anchor=W)
+ tree.heading('Availability', text="Availability", anchor=W)
+ #setting width of the columns
+ tree.column('#0', stretch=NO, minwidth=0, width=0)
+ tree.column('#1', stretch=NO, minwidth=0, width=100)
+ tree.column('#2', stretch=NO, minwidth=0, width=100)
+ tree.column('#3', stretch=NO, minwidth=0, width=210)
+ tree.column('#4', stretch=NO, minwidth=0, width=80)
+ tree.column('#5', stretch=NO, minwidth=0, width=100)
+ tree.column('#6', stretch=NO, minwidth=0, width=90)
+ tree.column('#7', stretch=NO, minwidth=0, width=89)
+ tree.column('#8', stretch=NO, minwidth=0, width=80)
+ tree.pack()
+ DisplayData()
 
 def register():
     return
