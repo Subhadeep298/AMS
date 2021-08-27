@@ -7,24 +7,13 @@ import sqlite3
 from typing import Sized
 from PIL import ImageTk, Image
 
-# def Database():
-#  global conn,cursor
-#  #creating student database
-#  conn = sqlite3.connect("ad.db")
-#  cursor = conn.cursor()
-#  #creating ad management system table
-#  cursor.execute(""""
-#  CREATE TABLE IF NOT EXISTS AD_MANAGE (
-#   SL.NO. INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-#   DISTRICT TEXT,
-#   TOWN TEXT,
-#   LOCATION TEXT,
-#   SIZE TEXT,
-#   SQFEET TEXT,
-#   RATE INTEGER,
-#   PERIOD TEXT,
-#   AVAILIABILITY TEXT)
-#  """)
+def Database():
+ global conn,cursor
+ #creating student database
+ conn = sqlite3.connect("ad.db")
+ cursor = conn.cursor()
+ #creating ad management system table
+ cursor.execute("CREATE TABLE IF NOT EXISTS AD_MANAGE (SLNO INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,DISTRICT TEXT,TOWN TEXT,LOCATION TEXT,SIZE TEXT,SQFEET TEXT,RATE TEXT,PERIOD TEXT,AVAILIABILITY TEXT)")
 
 
 def DisplayForm():
@@ -41,13 +30,13 @@ def DisplayForm():
  display_screen.title("AMS")
 
  #declaring variables
- global district,town,location,size,sqfeet,rate,period,availability,search
+ global district,town,location,size,sqfeet,rate,period,availability,search,tree
  district = StringVar()
  town = StringVar()
  location = StringVar()
  size = StringVar()
  sqfeet = StringVar()
- rate = IntVar()
+ rate = StringVar()
  period = StringVar()
  availability = StringVar()
  search= StringVar()
@@ -163,13 +152,12 @@ def DisplayForm():
 
  scrollbarx = Scrollbar(MidViewForm, orient=HORIZONTAL)
  scrollbary = Scrollbar(MidViewForm, orient=VERTICAL)
- tree = ttk.Treeview(MidViewForm,columns=("District",'Town','Location','Size','Sqfeet','Rate','Period','Availability'),
-                        selectmode="extended", height=100, yscrollcommand=scrollbary.set, xscrollcommand=scrollbarx.set)
+ tree = ttk.Treeview(MidViewForm,columns=("SL.no.","District",'Town','Location','Size','Sqfeet','Rate','Period','Availability'),selectmode="extended", height=100, yscrollcommand=scrollbary.set, xscrollcommand=scrollbarx.set)
  scrollbary.config(command=tree.yview)
  scrollbary.pack(side=RIGHT, fill=Y)
  scrollbarx.config(command=tree.xview)
  scrollbarx.pack(side=BOTTOM, fill=X)
-
+ tree.heading('SL.no.', text="SL.no.", anchor=W)
  tree.heading('District', text="District", anchor=W)
  tree.heading('Town', text="Town", anchor=W)   
  tree.heading('Location', text="Location", anchor=W)
@@ -180,34 +168,66 @@ def DisplayForm():
  tree.heading('Availability', text="Availability", anchor=W)
  #setting width of the columns
  tree.column('#0', stretch=NO, minwidth=0, width=0)
- tree.column('#1', stretch=NO, minwidth=0, width=100)
- tree.column('#2', stretch=NO, minwidth=0, width=100)
- tree.column('#3', stretch=NO, minwidth=0, width=210)
- tree.column('#4', stretch=NO, minwidth=0, width=80)
- tree.column('#5', stretch=NO, minwidth=0, width=100)
- tree.column('#6', stretch=NO, minwidth=0, width=90)
- tree.column('#7', stretch=NO, minwidth=0, width=89)
- tree.column('#8', stretch=NO, minwidth=0, width=80)
+ tree.column('#1', stretch=NO, minwidth=0, width=50)
+ tree.column('#2', stretch=NO, minwidth=0, width=80)
+ tree.column('#3', stretch=NO, minwidth=0, width=80)
+ tree.column('#4', stretch=NO, minwidth=0, width=250)
+ tree.column('#5', stretch=NO, minwidth=0, width=80)
+ tree.column('#6', stretch=NO, minwidth=0, width=70)
+ tree.column('#7', stretch=NO, minwidth=0, width=60)
+ tree.column('#8', stretch=NO, minwidth=0, width=100)
+ tree.column('#9', stretch=NO, minwidth=0, width=80)
  tree.pack()
  DisplayData()
 
-def register():
-    return
 
+def register():
+ Database()
+ #getting form data
+ district1 = district.get()
+ town1 = town.get()
+ location1 = location.get()
+ size1= size.get()
+ sqfeet1 = sqfeet.get()
+ rate1 = rate.get()
+ period1 = period.get()
+ availability1 = availability.get()
+ if district1 == '' or town1 == '' or location1== '' or size1== '' or sqfeet1== '' or rate1 == '' or period1 == '' or availability1 == '':
+     tkMessageBox.showinfo("Warning","fill the empty field!!!")
+ else:
+     conn.execute('INSERT INTO AD_MANAGE(DISTRICT,TOWN,LOCATION,SIZE,SQFEET,RATE,PERIOD,AVAILIABILITY) \
+              VALUES (?,?,?,?,?,?,?,?)',(district1,town1,location1,size1,sqfeet1,rate1,period1,availability1));
+     conn.commit()
+     tkMessageBox.showinfo("Message","Stored successfully")
+        #refresh table data
+     DisplayData()
+     conn.close()
+ 
 def SearchRecord():
     return
 
 def DisplayData():
-    return
+    #open database
+    Database()
+    #clear current data
+    tree.delete(*tree.get_children())
+    #select query
+    cursor=conn.execute("SELECT * FROM AD_MANAGE")
+    #fetch all data from database
+    fetch = cursor.fetchall()
+    #loop for displaying all data in GUI
+    for data in fetch:
+        tree.insert('', 'end', values=(data))
+    cursor.close()
+    conn.close()
 
 def Delete():
     return
 
 
-
 DisplayForm()
 if __name__ == '__main__':
- display_screen.mainloop()
+ mainloop()
 # Hi I am Soumyajit
 # I am collaborating with Subhadeep
  
