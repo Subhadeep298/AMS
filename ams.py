@@ -8,7 +8,7 @@ from typing import Sized
 from PIL import ImageTk, Image
 
 def Database():
- global conn,cursor
+ global conn, cursor
  #creating student database
  conn = sqlite3.connect("ad.db")
  cursor = conn.cursor()
@@ -150,6 +150,9 @@ def DisplayForm():
  Button(SearchPanel,text="Delete",font=("Arial", 10, "bold"),width=10,command=Delete).grid(row=0,column=4,padx=10,pady=10)
 
 
+
+
+
  scrollbarx = Scrollbar(MidViewForm, orient=HORIZONTAL)
  scrollbary = Scrollbar(MidViewForm, orient=VERTICAL)
  tree = ttk.Treeview(MidViewForm,columns=("SL.no.","District",'Town','Location','Size','Sqfeet','Rate','Period','Availability'),selectmode="extended", height=100, yscrollcommand=scrollbary.set, xscrollcommand=scrollbarx.set)
@@ -179,8 +182,21 @@ def DisplayForm():
  tree.column('#9', stretch=NO, minwidth=0, width=80)
  tree.pack()
  DisplayData()
+ style = ttk.Style()
+ #style.theme_use("alt")
+ style.configure("Treeview",
+                 #background = '#DEDEDE',
+                 foreground = 'black',
+                 rowheight = 30,
+                 feildbackground = "silver",
 
+                 )
+ style.configure('Treeview.Heading', background="green3")
 
+ style.map('Treeview', background=[('selected', '#535DD1')])
+ style.map('Treeview.Heading', background=[('selected', '#535DD1')])
+ tree.tag_configure('white', background='#F7F7F7')
+ tree.tag_configure('grey', background='#DEDEDE')
 def register():
  Database()
  #getting form data
@@ -216,8 +232,13 @@ def DisplayData():
     #fetch all data from database
     fetch = cursor.fetchall()
     #loop for displaying all data in GUI
+    counter = 0
     for data in fetch:
-        tree.insert('', 'end', values=(data))
+        if(counter%2 == 0):
+            tree.insert('', 'end', values=(data), tags=('white',))
+        else:
+            tree.insert('', 'end', values=(data), tags=('grey',))
+        counter = counter + 1
     cursor.close()
     conn.close()
 
