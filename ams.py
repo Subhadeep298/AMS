@@ -13,7 +13,7 @@ def Database():
  conn = sqlite3.connect("ad.db")
  cursor = conn.cursor()
  #creating ad management system table
- cursor.execute("CREATE TABLE IF NOT EXISTS AD_MANAGE (SLNO INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,DISTRICT TEXT,TOWN TEXT,LOCATION TEXT,SIZE TEXT,SQFEET TEXT,RATE TEXT,PERIOD TEXT,AVAILIABILITY TEXT)")
+ cursor.execute("CREATE TABLE IF NOT EXISTS AD_MANAGE (SLNO INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,DISTRICT TEXT,TOWN TEXT,LOCATION TEXT,SIZE TEXT,SQFEET TEXT,RATE TEXT,PERIOD TEXT,AVAILABILITY TEXT)")
 
 
 def DisplayForm():
@@ -30,7 +30,7 @@ def DisplayForm():
  display_screen.title("AMS")
 
  #declaring variables
- global district,town,location,size,sqfeet,rate,period,availability,search,tree
+ global district,town,location,size,sqfeet,rate,period,availability,search,tree,choosen
  district = StringVar()
  town = StringVar()
  location = StringVar()
@@ -124,7 +124,7 @@ def DisplayForm():
      "Period"]
   
  choosen.grid(row=0, column=0,padx=10,pady=10)
- # Shows february as a default value
+ # Shows District as a default value
  choosen.current(0) 
 
 # Search Bar
@@ -150,9 +150,8 @@ def DisplayForm():
  # my_button = Button(SearchPanel,image= search_btn)
  # my_button.grid(row=0,column=2,padx=10,pady=10)
 
+#Search Button
  Button(SearchPanel,text="Search",font=("Arial", 10, "bold"),width=10,bg="#535DD1",fg="white",relief="flat", command=SearchRecord).grid(row=0,column=2,padx=10,pady=10)
-
- 
 
 #ViewAll Button
  Button(SearchPanel,text="View All",font=("Arial", 10, "bold"),width=10,command=DisplayData).grid(row=0,column=3,padx=10,pady=10)
@@ -222,7 +221,7 @@ def register():
  if district1 == '' or town1 == '' or location1== '' or size1== '' or sqfeet1== '' or rate1 == '' or period1 == '' or availability1 == '':
      tkMessageBox.showinfo("Warning","fill the empty field!!!")
  else:
-     conn.execute('INSERT INTO AD_MANAGE(DISTRICT,TOWN,LOCATION,SIZE,SQFEET,RATE,PERIOD,AVAILIABILITY) \
+     conn.execute('INSERT INTO AD_MANAGE(DISTRICT,TOWN,LOCATION,SIZE,SQFEET,RATE,PERIOD,AVAILABILITY) \
               VALUES (?,?,?,?,?,?,?,?)',(district1,town1,location1,size1,sqfeet1,rate1,period1,availability1));
      conn.commit()
      tkMessageBox.showinfo("Message","Stored successfully")
@@ -231,7 +230,53 @@ def register():
      conn.close()
  
 def SearchRecord():
-    return
+        # open database
+        Database()
+        # checking search text is empty or not
+        lookup_record = search.get()
+
+        for record in tree.get_children(): #First, clear the table
+            tree.delete(record)
+        conn = sqlite3.connect('ad.db')
+        c = conn.cursor()
+        choose = choosen.get()
+        if ( choose == "District"):
+            c.execute("SELECT rowid, * FROM AD_MANAGE WHERE district like ?", (lookup_record,))
+            records = c.fetchall()
+        if (choose == "Town"):
+            c.execute("SELECT rowid, * FROM AD_MANAGE WHERE town like ?", (lookup_record,))
+            records = c.fetchall()
+        if (choose == "Location"):
+            c.execute("SELECT rowid, * FROM AD_MANAGE WHERE location like ?", (lookup_record,))
+            records = c.fetchall()
+        if (choose == "Size"):
+            c.execute("SELECT rowid, * FROM AD_MANAGE WHERE size like ?", (lookup_record,))
+            records = c.fetchall()
+        if (choose == "Sq. Feet"):
+            c.execute("SELECT rowid, * FROM AD_MANAGE WHERE sqfeet like ?", (lookup_record,))
+            records = c.fetchall()
+        if (choose == "Rate"):
+            c.execute("SELECT rowid, * FROM AD_MANAGE WHERE rate like ?", (lookup_record,))
+            records = c.fetchall()
+        if (choose == "Period"):
+            c.execute("SELECT rowid, * FROM AD_MANAGE WHERE period like ?", (lookup_record,))
+            records = c.fetchall()
+
+        global count
+        count = 0
+        for record in records: #Print
+            if count % 2 == 0:
+                tree.insert(parent='', index='end', iid=count, text='',
+                               values=(record[1],  record[2], record[3], record[4], record[5], record[6], record[7], record[8], record[9]),
+                               tags=('evenrow',))
+            else:
+                tree.insert(parent='', index='end', iid=count, text='',
+                               values=(record[1],  record[2], record[3], record[4], record[5], record[6], record[7], record[8], record[9]),
+                               tags=('oddrow',))
+            count += 1 # increment counter
+
+        conn.commit()
+        conn.close()
 
 def DisplayData():
     #open database
@@ -254,7 +299,9 @@ def DisplayData():
     conn.close()
 
 def Delete():
-    return
+    selected_item = tree.selection()[0]
+    tree.delete(selected_item)
+
 
 
 DisplayForm()
