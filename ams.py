@@ -58,11 +58,11 @@ def DisplayForm():
  SearchPanel.pack(side=TOP,fill=Y)
 
  #label for heading
- lbl_text = Label(HeadingForm, text="Advertisement Management System", font=('verdana', 22),width=600,bg="#e6c68c",fg="#5b29ab")
+ lbl_text = Label(HeadingForm, text="Advertisement Management System", font=('verdana', 22, "bold"),width=600,fg="#535DD1")
  lbl_text.pack()
  #creating the insert form in the LForm
 
- ID = Label(LForm,text="Insert Data",font = ('verdana',15),height=4)
+ ID = Label(LForm,text="Insert Data",font = ('verdana',17, "bold"),height=4, fg="#535DD1")
  ID.grid(row=0,column=0,columnspan=2,sticky=" ")
 
  Label(LForm, text="District", font=("Arial", 12)).grid(row=1,column=0,pady=5)
@@ -92,7 +92,7 @@ def DisplayForm():
  Entry(LForm, font=("Arial", 10, "bold"),textvariable=availability).grid(row=8,column=1,pady=5, ipady=3)
 
 #Submit Button
- Button(LForm,text="Submit", font=("Arial", 10, "bold"),width=30,bg="lightblue",fg="black",command=register).grid(row=9,column=0,columnspan=2,padx=20,pady=20)
+ Button(LForm,text="Submit", font=("Arial", 10, "bold"),width=25,bg="#535DD1",fg="white",command=register).grid(row=9,column=0,columnspan=2,padx=20,pady=20, ipady = 3)
 
 # Name DropDown
  # Change the label text
@@ -111,7 +111,7 @@ def DisplayForm():
 
  global clicked 
  clicked = StringVar()
- choosen = ttk.Combobox(SearchPanel, width = 20,textvariable = clicked)
+ choosen = ttk.Combobox(SearchPanel, state="readonly", width = 20,textvariable = clicked)
   
 # Adding combobox drop down list
  choosen["values"] = [
@@ -128,9 +128,20 @@ def DisplayForm():
  choosen.current(0) 
 
 # Search Bar
- search_bar = Entry(SearchPanel,font=("Arial",10,"bold"),textvariable=search, width= 50)
- search_bar.grid(row=0,column=1,padx= 10, pady= 10)
- search_bar.insert(0,"Search here......")
+ search_bar = Entry(SearchPanel,font=("Arial",10, "bold"),textvariable=search, width= 50, bd=1, bg = "#F5F4F4")
+ search_bar.grid(row=0,column=1,padx= 10, pady= 10, ipady = 4, ipadx = 1)
+ search_bar.insert(0,"  Search here ")
+ search_bar.configure(state=DISABLED)
+
+ def on_click(event):
+     search_bar.configure(state=NORMAL)
+     search_bar.delete(0, END)
+     # make the callback only work once
+     search_bar.unbind('<Button-1>', on_click_id)
+
+ on_click_id = search_bar.bind('<Button-1>', on_click)
+
+
 
 #Search Button with an image as an icon
 
@@ -139,7 +150,7 @@ def DisplayForm():
  # my_button = Button(SearchPanel,image= search_btn)
  # my_button.grid(row=0,column=2,padx=10,pady=10)
 
- Button(SearchPanel,text="Search",font=("Arial", 10, "bold"),width=10,bg="black",fg="white",command=SearchRecord).grid(row=0,column=2,padx=10,pady=10)
+ Button(SearchPanel,text="Search",font=("Arial", 10, "bold"),width=10,bg="#535DD1",fg="white",relief="flat", command=SearchRecord).grid(row=0,column=2,padx=10,pady=10)
 
  
 
