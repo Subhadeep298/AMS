@@ -31,6 +31,8 @@ def DisplayForm():
 
  #declaring variables
  global district,town,location,size,sqfeet,rate,period,availability,search,tree,choosen
+ global entry_district, entry_town, entry_location, entry_size, entry_sqfeet, entry_rate, entry_period, entry_availability
+
  district = StringVar()
  town = StringVar()
  location = StringVar()
@@ -66,30 +68,37 @@ def DisplayForm():
  ID.grid(row=0,column=0,columnspan=2,sticky=" ")
 
  Label(LForm, text="District", font=("Arial", 12)).grid(row=1,column=0,pady=5)
- Entry(LForm,font=("Arial",10,"bold"),textvariable=district).grid(row=2,column=0,padx= 30, ipady=3)
+ entry_district = Entry(LForm,font=("Arial",10,"bold"),textvariable=district)
+ entry_district.grid(row=2,column=0,padx= 30, ipady=3)
 
  Label(LForm, text="Town ", font=("Arial", 12)).grid(row=1,column=1,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=town).grid(row=2,column=1,padx= 30,pady=20, ipady=3)
+ entry_town = Entry(LForm, font=("Arial", 10, "bold"),textvariable=town)
+ entry_town.grid(row=2,column=1,padx= 30,pady=20, ipady=3)
 
  Label(LForm, text="Location ", font=("Arial", 12)).grid(row=3,column=0,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=location).grid(row=4,column=0,padx= 30,pady=20, ipady=3)
+ entry_location = Entry(LForm, font=("Arial", 10, "bold"),textvariable=location)
+ entry_location.grid(row=4, column=0, padx=30, pady=20, ipady=3)
 
  Label(LForm, text="Size", font=("Arial", 12)).grid(row=3,column=1,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=size).grid(row=4,column=1,padx= 30,pady=20, ipady=3)
+ entry_size = Entry(LForm, font=("Arial", 10, "bold"),textvariable=size)
+ entry_size.grid(row=4, column=1, padx=30, pady=20, ipady=3)
 
  Label(LForm, text="Sq.Feet ", font=("Arial", 12)).grid(row=5,column=0,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=sqfeet).grid(row=6,column=0,padx= 30,pady=20, ipady=3)
- 
+ entry_sqfeet = Entry(LForm, font=("Arial", 10, "bold"),textvariable=sqfeet)
+ entry_sqfeet.grid(row=6, column=0, padx=30, pady=20, ipady=3)
+
  Label(LForm, text="Rate ", font=("Arial", 12)).grid(row=5,column=1,pady=5)
- rate = Entry(LForm, font=("Arial", 10, "bold"),textvariable=rate)
- rate.grid(row=6,column=1,padx= 30,pady=20, ipady=3)
- rate.delete(0, 'end') # to remove the initial value zero
+ entry_rate = Entry(LForm, font=("Arial", 10, "bold"),textvariable=rate)
+ entry_rate.grid(row=6,column=1,padx= 30,pady=20, ipady=3)
+ entry_rate.delete(0, 'end') # to remove the initial value zero
 
  Label(LForm, text="Period", font=("Arial", 12)).grid(row=7,column=0,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=period).grid(row=8,column=0,padx= 30,pady=20, ipady=3)
+ entry_period = Entry(LForm, font=("Arial", 10, "bold"),textvariable=period)
+ entry_period.grid(row=8, column=0, padx=30, pady=20, ipady=3)
 
  Label(LForm, text="Availability", font=("Arial", 12)).grid(row=7,column=1,pady=5)
- Entry(LForm, font=("Arial", 10, "bold"),textvariable=availability).grid(row=8,column=1,pady=5, ipady=3)
+ entry_availability = Entry(LForm, font=("Arial", 10, "bold"),textvariable=availability)
+ entry_availability.grid(row=8,column=1,pady=5, ipady=3)
 
 #Submit Button
  Button(LForm,text="Submit", font=("Arial", 10, "bold"),width=25,bg="#535DD1",fg="white",command=register).grid(row=9,column=0,columnspan=2,padx=20,pady=20, ipady = 3)
@@ -221,6 +230,15 @@ def register():
  if district1 == '' or town1 == '' or location1== '' or size1== '' or sqfeet1== '' or rate1 == '' or period1 == '' or availability1 == '':
      tkMessageBox.showinfo("Warning","fill the empty field!!!")
  else:
+     entry_district.delete(0,END)
+     entry_town.delete(0,END)
+     entry_location.delete(0,END)
+     entry_size.delete(0,END)
+     entry_sqfeet.delete(0,END)
+     entry_rate.delete(0,END)
+     entry_period.delete(0,END)
+     entry_availability.delete(0,END)
+
      conn.execute('INSERT INTO AD_MANAGE(DISTRICT,TOWN,LOCATION,SIZE,SQFEET,RATE,PERIOD,AVAILABILITY) \
               VALUES (?,?,?,?,?,?,?,?)',(district1,town1,location1,size1,sqfeet1,rate1,period1,availability1));
      conn.commit()
