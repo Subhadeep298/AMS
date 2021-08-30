@@ -47,7 +47,7 @@ def DisplayForm():
  HeadingForm.pack(side=TOP,fill=X)
  
  #first left frame for the registration 
- LForm = Frame(display_screen,width=280)
+ LForm = Frame(display_screen,width=280, bd=3)
  LForm.pack(side=LEFT,fill=Y)
  #mid frame for displaying students record
  MidViewForm = Frame(display_screen, width="1000",bg="grey")
@@ -301,7 +301,12 @@ def DisplayData():
 def Delete():
     selected_item = tree.selection()[0]
     tree.delete(selected_item)
-
+    ''' conn = sqlite3.connect('ad.db')
+    c = conn.cursor()
+    c.execute("DELETE from AD_MANAGE WHERE oid="+ selected_item)
+    delete_box.delete(0, END)
+    conn.commit()
+    conn.close() '''
 
 
 DisplayForm()
