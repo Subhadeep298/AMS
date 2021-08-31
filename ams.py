@@ -208,7 +208,6 @@ def DisplayForm():
                  foreground = 'black',
                  rowheight = 30,
                  feildbackground = "silver",
-
                  )
  style.configure('Treeview.Heading', background="green3")
 
@@ -216,6 +215,7 @@ def DisplayForm():
  style.map('Treeview.Heading', background=[('selected', '#535DD1')])
  tree.tag_configure('white', background='#F7F7F7')
  tree.tag_configure('grey', background='#DEDEDE')
+
 def register():
  Database()
  #getting form data
@@ -296,6 +296,32 @@ def SearchRecord():
         conn.commit()
         conn.close()
 
+
+
+def Delete():
+    # selected_item = tree.selection()[0]
+    # tree.delete(selected_item)
+    # conn = sqlite3.connect('ad.db')
+    # c = conn.cursor()
+    # c.execute("DELETE from AD_MANAGE WHERE oid="+ selected_item[-1])
+    # #delete_box.delete(0, END)
+    # conn.commit()
+    # conn.close()
+    Database()
+    if not tree.selection():
+        tkMessageBox.showwarning("Warning","Select data to delete")
+    else: 
+        result = tkMessageBox.askquestion('Confirm', 'Are you sure you want to delete this record?',icon="warning")
+        if result == 'yes':
+            curItem = tree.focus()
+            contents = (tree.item(curItem))
+            selecteditem = contents['values']
+            tree.delete(curItem)
+            cursor=conn.execute("DELETE FROM AD_MANAGE WHERE SLNO= %d" % selecteditem[0])
+            conn.commit()
+            cursor.close()
+            conn.close()
+
 def DisplayData():
     #open database
     Database()
@@ -316,20 +342,9 @@ def DisplayData():
     cursor.close()
     conn.close()
 
-def Delete():
-    selected_item = tree.selection()[0]
-    tree.delete(selected_item)
-    conn = sqlite3.connect('ad.db')
-    c = conn.cursor()
-    c.execute("DELETE from AD_MANAGE WHERE oid="+ selected_item[-1])
-    #delete_box.delete(0, END)
-    conn.commit()
-    conn.close()
-
 
 DisplayForm()
 if __name__ == '__main__':
  mainloop()
-# Hi I am Soumyajit
-# I am collaborating with Subhadeep
+
  
