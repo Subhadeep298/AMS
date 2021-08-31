@@ -195,7 +195,7 @@ def DisplayForm():
  tree.column('#3', stretch=NO, minwidth=0, width=80)
  tree.column('#4', stretch=NO, minwidth=0, width=250)
  tree.column('#5', stretch=NO, minwidth=0, width=80)
- tree.column('#6', stretch=NO, minwidth=0, width=70)
+ tree.column('#6', stretch=NO, minwidth=0, width=66)
  tree.column('#7', stretch=NO, minwidth=0, width=60)
  tree.column('#8', stretch=NO, minwidth=0, width=100)
  tree.column('#9', stretch=NO, minwidth=0, width=80)
@@ -238,7 +238,6 @@ def register():
      entry_rate.delete(0,END)
      entry_period.delete(0,END)
      entry_availability.delete(0,END)
-
      conn.execute('INSERT INTO AD_MANAGE(DISTRICT,TOWN,LOCATION,SIZE,SQFEET,RATE,PERIOD,AVAILABILITY) \
               VALUES (?,?,?,?,?,?,?,?)',(district1,town1,location1,size1,sqfeet1,rate1,period1,availability1));
      conn.commit()
