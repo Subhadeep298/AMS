@@ -1,5 +1,7 @@
 # AMS
    Advertising Management System that is designed &amp; developed to manage all the in-house functions.
+   This application stores the information of all the clients of an Advertisement company. 
+   The minimalistic UI alows the admin to ADD, VIEW, SEARCH, and DELETE data from the database easily.
 ## Technology Stack
     Tkinter, SQLite.
 ## Snapshot 
